@@ -989,8 +989,8 @@ let errorRows = JSON.parse(localStorage.getItem('errorRows') || JSON.stringify([
   { lesson:'03', category:'connection', text:'My topic sentence was not connected to my thesis, and I also did not develop the topic sentence in the body paragraph.', reappeared: true },
 ]));
 let studyRows = JSON.parse(localStorage.getItem('studyRows') || JSON.stringify([
-  { date:'19 May', skill:'reading', source:'Cam 18 · T2 · P1', score:'11/13', errors:'Q9: trap synonym. (adhesive – glue)' },
-  { date:'21 May', skill:'listening', source:'Cam 17 · T1 · S2–3', score:'14/20', errors:'S3 Q32: They talked about sport center, but said they would be happy to have such a facility. The question was about a facility they ALREADY have.' },
+  { date:'19 May', skill:'reading', source:'Cam 18 · T2 · P1', score:'11/13', errors:'Q9: trap synonym. (adhesive – glue)', photo: null },
+  { date:'21 May', skill:'listening', source:'Cam 17 · T1 · S2–3', score:'14/20', errors:'S3 Q32: They talked about sport center, but said they would be happy to have such a facility. The question was about a facility they ALREADY have.', photo: null },
 ]));
 
 let speakingErrorRows = JSON.parse(localStorage.getItem('speakingErrorRows') || JSON.stringify([
@@ -1302,7 +1302,7 @@ function openModal(type) {
         <textarea id="m-errors" rows="3" placeholder="What went wrong and why..."></textarea>
       </div>
       <div class="field-group">
-        <label>Attach test <span style="color:var(--rust);font-weight:600">— required</span></label>
+        <label>Attach test <span style="color:var(--light-brown);font-weight:500">— optional</span></label>
         <label class="photo-upload-btn" for="m-study-photo" style="display:inline-flex">📷 choose photo</label>
         <input type="file" id="m-study-photo" accept="image/*" style="display:none" onchange="previewStudyPhoto(event)">
         <div class="study-photo-preview" id="study-photo-preview">
@@ -1340,7 +1340,6 @@ function saveStudy() {
   const date = document.getElementById('m-date').value.trim();
   const source = document.getElementById('m-source').value.trim();
   if (!date || !source) { alert('Please fill in date and source.'); return; }
-  if (!currentStudyPhoto) { alert('You must attach a photo of your test. No photo — no log entry.'); return; }
   studyRows.push({
     date, skill: document.getElementById('m-skill').value,
     source, score: document.getElementById('m-score').value.trim() || '—',
