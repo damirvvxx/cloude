@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intensive Student Guide — Bobir Djuraev</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #faf7f2;
+    --warm-white: #fffef9;
+    --ink: #1a1612;
+    --brown: #3d2b1f;
+    --rust: #c4522a;
+    --gold: #d4a843;
+    --sage: #5a7a5c;
+    --slate: #4a5568;
+    --light-brown: #8b6f57;
+    --border: #e8ddd0;
+    --tag-bg: #f0e8dc;
+    --task1: #e8f0ea;
+    --task1-text: #3d6b45;
+    --task2: #e8eaf5;
+    --task2-text: #3d4a8b;
+    --shadow: 0 4px 24px rgba(61,43,31,0.08);
+    --shadow-hover: 0 8px 40px rgba(61,43,31,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 40px 20px 80px;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 56px;
+    position: relative;
+  }
+  .header::before {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: var(--rust);
+    margin: 0 auto 20px;
+    border-radius: 2px;
+  }
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: var(--brown);
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+  }
+  .header h1 em {
+    font-style: italic;
+    color: var(--rust);
+  }
+  .header .sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--light-brown);
+    margin-top: 10px;
+  }
+  .stats-row {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+  .stat-pill {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    padding: 8px 20px;
+    font-size: 0.82rem;
+    color: var(--slate);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .stat-pill strong {
+    color: var(--rust);
+    font-size: 1rem;
+    font-family: 'Playfair Display', serif;
+  }
+
+  /* Section */
+  .section {
+    max-width: 900px;
+    margin: 0 auto 48px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--brown);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-title span.num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    background: var(--rust);
+    color: white;
+    padding: 3px 9px;
+    border-radius: 20px;
+  }
+
+  /* Lesson Cards */
+  .lessons-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .lesson-card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 22px;
+    display: grid;
+    grid-template-columns: 48px 1fr auto;
+    gap: 16px;
+    align-items: center;
+    transition: box-shadow 0.2s, transform 0.2s;
+    cursor: pointer;
+  }
+  .lesson-card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-1px);
+  }
+  .lesson-card.done {
+    background: #f6faf6;
+    border-color: #c5ddc7;
+  }
+  .lesson-card.done .lesson-title { text-decoration: line-through; color: var(--slate); }
+
+  .lesson-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-align: center;
+    color: var(--light-brown);
+  }
+
+  .lesson-body {}
+  .lesson-title {
+    font-weight: 500;
+    font-size: 0.93rem;
+    color: var(--brown);
+    margin-bottom: 4px;
+  }
+  .lesson-meta {
+    font-size: 0.78rem;
+    color: var(--slate);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+  .tag {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+  }
+  .tag.task1 { background: var(--task1); color: var(--task1-text); }
+  .tag.task2 { background: var(--task2); color: var(--task2-text); }
+  .tag.type { background: var(--tag-bg); color: var(--brown); }
+
+  .check-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+    font-size: 14px;
+    color: transparent;
+  }
+  .check-btn:hover { border-color: var(--sage); }
+  .lesson-card.done .check-btn {
+    background: var(--sage);
+    border-color: var(--sage);
+    color: white;
+  }
+
+  /* Progress bar */
+  .progress-wrap {
+    background: var(--border);
+    border-radius: 20px;
+    height: 6px;
+    margin-bottom: 24px;
+    overflow: hidden;
+  }
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--sage), var(--gold));
+    border-radius: 20px;
+    transition: width 0.4s ease;
+  }
+  .progress-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--light-brown);
+    margin-bottom: 8px;
+    letter-spacing: 0.08em;
+  }
+
+  /* Error Log Table */
+  .error-log {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .error-log-header {
+    background: var(--brown);
+    color: var(--cream);
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .error-log-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+  }
+  .error-log-header .hint {
+    font-size: 0.75rem;
+    color: #c4b5a5;
+    font-style: italic;
+  }
+
+  .error-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .error-table thead th {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--light-brown);
+    padding: 14px 16px 10px;
+    text-align: left;
+    background: #f5f0e8;
+    border-bottom: 1px solid var(--border);
+  }
+  .error-table tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+  .error-table tbody tr:last-child { border-bottom: none; }
+  .error-table tbody tr:hover { background: #fdf8f0; }
+
+  .error-table td {
+    padding: 14px 16px;
+    vertical-align: top;
+    font-size: 0.85rem;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  .error-table td.lesson-cell {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--light-brown);
+    white-space: nowrap;
+  }
+  .error-table td.cat-cell {
+    white-space: nowrap;
+  }
+  .cat-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 500;
+  }
+  .cat-badge.answer { background: #fdecea; color: #c0392b; }
+  .cat-badge.connection { background: #fef9e7; color: #b7950b; }
+  .cat-badge.grammar { background: #eaf4fb; color: #1a5276; }
+  .cat-badge.vocab { background: #eafaf1; color: #1e8449; }
+  .cat-badge.structure { background: #f4ecf7; color: #7d3c98; }
+  .cat-badge.other { background: var(--tag-bg); color: var(--brown); }
+
+  .reappeared-cell {
+    text-align: center;
+    vertical-align: middle !important;
+  }
+  .reappeared-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 500;
+  }
+  .reappeared-badge.yes { background: #fdecea; color: #c0392b; }
+  .reappeared-badge.no { color: var(--border); font-size: 1rem; }
+
+  /* Speaking cat badges */
+  .cat-badge.fluency     { background: #fff3e0; color: #e65100; }
+  .cat-badge.pronunciation { background: #e8eaf6; color: #283593; }
+  .cat-badge.lexical-sp  { background: #e8f5e9; color: #1b5e20; }
+  .cat-badge.grammar-sp  { background: #e3f2fd; color: #0d47a1; }
+  .cat-badge.coherence   { background: #fce4ec; color: #880e4f; }
+  .cat-badge.content-sp  { background: #f3e5f5; color: #6a1b9a; }
+
+  /* Speaking error log — coral/terracotta accent */
+  .speaking-log {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .speaking-log-header {
+    background: linear-gradient(135deg, #b54a2a 0%, #8b3520 100%);
+    color: white;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .speaking-log-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+  }
+  .speaking-log-header .hint { font-size: 0.75rem; color: #e8b8a8; font-style: italic; }
+
+  .speaking-table { width: 100%; border-collapse: collapse; }
+  .speaking-table thead th {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #a0522d;
+    padding: 14px 16px 10px;
+    text-align: left;
+    background: #fdf3ee;
+    border-bottom: 1px solid var(--border);
+  }
+  .speaking-table tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+  .speaking-table tbody tr:last-child { border-bottom: none; }
+  .speaking-table tbody tr:hover { background: #fdf8f5; }
+  .speaking-table td {
+    padding: 14px 16px;
+    vertical-align: top;
+    font-size: 0.85rem;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  .speaking-table td.part-cell {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    white-space: nowrap;
+  }
+  .part-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 500;
+  }
+  .part-badge.part1 { background: #fff3e0; color: #bf360c; }
+  .part-badge.part2 { background: #e8f5e9; color: #1b5e20; }
+  .part-badge.part3 { background: #e8eaf6; color: #283593; }
+
+  /* Add row button */
+  .add-row-btn {
+    width: 100%;
+    padding: 14px;
+    background: transparent;
+    border: none;
+    border-top: 1px dashed var(--border);
+    cursor: pointer;
+    font-size: 0.8rem;
+    color: var(--light-brown);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: 'DM Sans', sans-serif;
+    transition: background 0.15s, color 0.15s;
+  }
+  .add-row-btn:hover { background: #fdf5e8; color: var(--rust); }
+
+  /* Modal */
+  .modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(26,22,18,0.5);
+    z-index: 100;
+    backdrop-filter: blur(4px);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal {
+    background: var(--warm-white);
+    border-radius: 18px;
+    padding: 30px;
+    max-width: 520px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(61,43,31,0.25);
+    animation: slideUp 0.25s ease;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .modal h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--brown);
+    margin-bottom: 20px;
+  }
+  .field-group { margin-bottom: 16px; }
+  .field-group label {
+    display: block;
+    font-size: 0.75rem;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--light-brown);
+    margin-bottom: 6px;
+  }
+  .field-group input,
+  .field-group select,
+  .field-group textarea {
+    width: 100%;
+    padding: 10px 14px;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s;
+    resize: vertical;
+  }
+  .field-group input:focus,
+  .field-group select:focus,
+  .field-group textarea:focus { border-color: var(--rust); }
+
+  .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
+  .btn-save {
+    flex: 1;
+    padding: 11px;
+    background: var(--brown);
+    color: var(--cream);
+    border: none;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-save:hover { background: var(--rust); }
+  .btn-cancel {
+    padding: 11px 20px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    color: var(--slate);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-cancel:hover { border-color: var(--rust); color: var(--rust); }
+
+  /* Self study log */
+  .study-log {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    margin-top: 0;
+  }
+  .study-log-header {
+    background: linear-gradient(135deg, var(--sage) 0%, #3d5e40 100%);
+    color: white;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .study-log-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+  }
+  .study-log-header .hint { font-size: 0.75rem; color: #b8d4ba; font-style: italic; }
+
+  .study-table { width: 100%; border-collapse: collapse; }
+  .study-table thead th {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sage);
+    padding: 14px 16px 10px;
+    text-align: left;
+    background: #f2f7f2;
+    border-bottom: 1px solid var(--border);
+  }
+  .study-table tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+  .study-table tbody tr:last-child { border-bottom: none; }
+  .study-table tbody tr:hover { background: #f6fbf6; }
+  .study-table td {
+    padding: 14px 16px;
+    vertical-align: top;
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+  .skill-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 500;
+  }
+  .skill-badge.reading { background: #fef9e7; color: #b7950b; }
+  .skill-badge.listening { background: #e8f4fd; color: #1a6fa3; }
+  .skill-badge.writing { background: #f9ebff; color: #7d3c98; }
+  .skill-badge.speaking { background: #fdecea; color: #c0392b; }
+
+  .score-cell {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--brown);
+  }
+
+  /* Delete btn */
+  .del-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--border);
+    padding: 2px 6px;
+    border-radius: 6px;
+    transition: all 0.15s;
+    display: block;
+    margin: 0 auto;
+  }
+  .del-btn:hover { color: var(--rust); background: #fdecea; }
+
+  /* Footer note */
+  .footer-note {
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--light-brown);
+    margin-top: 48px;
+    font-style: italic;
+    font-family: 'Playfair Display', serif;
+  }
+
+  /* Photo upload */
+  .photo-slots {
+    margin-top: 10px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .photo-slot {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .slot-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--light-brown);
+  }
+  .photo-upload-btn {
+    font-size: 0.72rem;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.06em;
+    color: var(--light-brown);
+    background: var(--tag-bg);
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+  }
+  .photo-upload-btn:hover { border-color: var(--rust); color: var(--rust); background: #fdf0e8; }
+  .feedback-thumb-wrap {
+    position: relative;
+    display: inline-block;
+  }
+  .feedback-thumb {
+    width: 52px;
+    height: 52px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid var(--sage);
+    cursor: pointer;
+    transition: transform 0.15s;
+    display: block;
+  }
+  .feedback-thumb:hover { transform: scale(1.06); }
+  .thumb-del {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--rust);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  /* Study checklist */
+  .study-checks {
+    margin-top: 10px;
+    display: flex;
+    gap: 7px;
+    flex-wrap: wrap;
+  }
+  .check-pill {
+    font-size: 0.7rem;
+    font-family: 'DM Mono', monospace;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    color: var(--light-brown);
+    cursor: pointer;
+    transition: all 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .check-pill:hover { border-color: var(--sage); color: var(--sage); }
+  .check-pill.done {
+    background: var(--task1);
+    border-color: var(--task1-text);
+    color: var(--task1-text);
+    font-weight: 500;
+  }
+  .check-pill.done::before { content: '✓ '; }
+
+  .study-photo-preview {
+    margin-top: 8px;
+    display: none;
+    align-items: center;
+    gap: 10px;
+  }
+  .study-photo-preview.visible { display: flex; }
+  .study-photo-preview img {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid var(--sage);
+  }
+  .study-photo-preview span {
+    font-size: 0.78rem;
+    color: var(--sage);
+    font-family: 'DM Mono', monospace;
+  }
+  .study-thumb {
+    width: 38px;
+    height: 38px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1.5px solid var(--sage);
+    cursor: pointer;
+    transition: transform 0.15s;
+    display: block;
+  }
+  .study-thumb:hover { transform: scale(1.1); }
+
+  /* Lightbox */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(26,22,18,0.85);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img {
+    max-width: 90vw;
+    max-height: 90vh;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+  .lightbox-close {
+    position: fixed;
+    top: 20px;
+    right: 24px;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    line-height: 1;
+  }
+
+  /* Lesson notes */
+  .lesson-notes {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .note-block {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .note-block.has-content { border-color: var(--sage); }
+  .note-toggle {
+    width: 100%;
+    background: #f9f5ef;
+    border: none;
+    padding: 7px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--light-brown);
+    transition: background 0.15s;
+    gap: 8px;
+  }
+  .note-block.has-content .note-toggle { background: #f0f7f0; color: var(--task1-text); }
+  .note-toggle:hover { background: #f0ece4; }
+  .note-toggle-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.65rem;
+  }
+  .note-snippet {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--sage);
+    font-style: italic;
+    font-family: 'DM Sans', sans-serif;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 0.72rem;
+  }
+  .note-arrow { font-size: 0.6rem; transition: transform 0.2s; }
+  .note-block.open .note-arrow { transform: rotate(180deg); }
+  .note-body {
+    display: none;
+    padding: 8px 10px;
+    background: var(--warm-white);
+  }
+  .note-block.open .note-body { display: block; }
+  .note-textarea {
+    width: 100%;
+    min-height: 72px;
+    padding: 8px 10px;
+    background: transparent;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    color: var(--ink);
+    resize: vertical;
+    outline: none;
+    line-height: 1.5;
+  }
+  .note-textarea::placeholder { color: #c4b5a5; font-style: italic; }
+  .note-char-count {
+    text-align: right;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--border);
+    padding: 0 10px 6px;
+  }
+
+  @media (max-width: 600px) {
+    .lesson-card { grid-template-columns: 36px 1fr auto; gap: 10px; padding: 14px 14px; }
+    .error-table td, .study-table td { padding: 10px 10px; font-size: 0.8rem; }
+    .error-table thead th, .study-table thead th { padding: 10px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <h1>Intensive Student <em>Guide</em></h1>
+  <p class="sub">Fast Education · Bobir Djuraev</p>
+  <div class="stats-row">
+    <div class="stat-pill"><strong>12</strong> Total Classes</div>
+    <div class="stat-pill"><strong>4</strong> Task 1</div>
+    <div class="stat-pill"><strong>8</strong> Task 2</div>
+    <div class="stat-pill">Self-study <strong>Daily</strong></div>
+  </div>
+</div>
+
+<!-- Lesson Schedule -->
+<div class="section">
+  <div class="section-title">
+    <span class="num">01</span>
+    Lesson Schedule
+  </div>
+  <div class="progress-label" id="progress-label">0 of 12 lessons completed</div>
+  <div class="progress-wrap"><div class="progress-bar" id="progress-bar" style="width:0%"></div></div>
+  <div class="lessons-grid" id="lessons-grid"></div>
+</div>
+
+<!-- Error Log -->
+<div class="section">
+  <div class="section-title">
+    <span class="num">02</span>
+    Writing Error Log
+  </div>
+  <div class="error-log">
+    <div class="error-log-header">
+      <h3>✏️ Writing Error Log</h3>
+      <span class="hint">Feedback only works if you do something with it.</span>
+    </div>
+    <table class="error-table">
+      <thead>
+        <tr>
+          <th>Lesson</th>
+          <th>Category</th>
+          <th>What I did wrong — in my own words</th>
+          <th style="text-align:center">Reappeared?</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="error-tbody">
+        <!-- seeded rows -->
+      </tbody>
+    </table>
+    <button class="add-row-btn" onclick="openModal('error')">＋ Add error entry</button>
+  </div>
+</div>
+
+<!-- Speaking Error Log -->
+<div class="section">
+  <div class="section-title">
+    <span class="num">03</span>
+    Speaking Error Log
+  </div>
+  <div class="speaking-log">
+    <div class="speaking-log-header">
+      <h3>🎙️ Speaking Mistakes</h3>
+      <span class="hint">Noticing the pattern is the first step to fixing it.</span>
+    </div>
+    <table class="speaking-table">
+      <thead>
+        <tr>
+          <th>Part</th>
+          <th>Category</th>
+          <th>What I did wrong — in my own words</th>
+          <th style="text-align:center">Reappeared?</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="speaking-error-tbody"></tbody>
+    </table>
+    <button class="add-row-btn" onclick="openModal('speakingError')">＋ Add speaking mistake</button>
+  </div>
+</div>
+
+<!-- Self-Study Log -->
+<div class="section">
+  <div class="section-title">
+    <span class="num">04</span>
+    Self-Study Log
+  </div>
+  <div class="study-log">
+    <div class="study-log-header">
+      <h3>📚 Study Sessions</h3>
+      <span class="hint">At least one session every other day.</span>
+    </div>
+    <table class="study-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Skill</th>
+          <th>Source</th>
+          <th>Score</th>
+          <th>Errors — reason</th>
+          <th style="text-align:center">Test</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="study-tbody"></tbody>
+    </table>
+    <button class="add-row-btn" onclick="openModal('study')">＋ Add study session</button>
+  </div>
+</div>
+
+<p class="footer-note">"Your Sunday essay is your real level." — Fast Education</p>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="Feedback photo">
+</div>
+
+<!-- Modal -->
+<div class="modal-backdrop" id="modal-backdrop">
+  <div class="modal" id="modal-content"></div>
+</div>
+
+<script>
+const lessons = [
+  { num:'01', task:'Task 1', type:'Dynamic chart', topic:'Employment / Sport and Leisure', detail:'Trends over time — range language, comparison' },
+  { num:'02', task:'Task 2', type:'Agree / Disagree', topic:'Gender / Family', detail:'Clear position in intro, consistent stance throughout' },
+  { num:'03', task:'Task 1', type:'Static chart', topic:'Education / Energy', detail:'Snapshot comparison — grouping, no trends' },
+  { num:'04', task:'Task 2', type:'To what extent?', topic:'Technology / Privacy and safety', detail:'Qualify your position — partial or full agreement' },
+  { num:'05', task:'Task 1', type:'Flowchart / process', topic:'Environment / Food and Diet', detail:'Sequencing, passive voice, stage-by-stage' },
+  { num:'06', task:'Task 2', type:'Cause and effect', topic:'Health / Ageing population', detail:'Root causes, chains of consequence' },
+  { num:'07', task:'Task 1', type:'Map', topic:'Urbanisation / Travel and Transport', detail:'Spatial language, direction, before/after change' },
+  { num:'08', task:'Task 2', type:'Problem and solution', topic:'Crime / Tourism', detail:'Match solutions to stated problems precisely' },
+  { num:'09', task:'Task 2', type:'Discuss both views + opinion', topic:'Media / Art and Culture', detail:'Cover both sides fairly before giving your view' },
+  { num:'10', task:'Task 2', type:'Outweigh', topic:'Globalisation / Space Exploration', detail:'Weigh — conclusion must match body paragraphs' },
+  { num:'11', task:'Task 2', type:'Advantages and disadvantages', topic:'Animals and Nature / Shopping and money', detail:'Balanced coverage — no opinion unless asked' },
+  { num:'12', task:'Task 2', type:'Open / direct question', topic:'Government / International Aid', detail:'Two distinct questions — answer both separately' },
+];
+
+// State
+let completedLessons = JSON.parse(localStorage.getItem('completed') || '[]');
+let errorRows = JSON.parse(localStorage.getItem('errorRows') || JSON.stringify([
+  { lesson:'02', category:'answer', text:'The question said "to what extent do you agree" but I treated it as a simple agree/disagree. I never qualified my position — I just said "I agree" and listed reasons.', reappeared: false },
+  { lesson:'03', category:'connection', text:'My topic sentence was not connected to my thesis, and I also did not develop the topic sentence in the body paragraph.', reappeared: true },
+]));
+let studyRows = JSON.parse(localStorage.getItem('studyRows') || JSON.stringify([
+  { date:'19 May', skill:'reading', source:'Cam 18 · T2 · P1', score:'11/13', errors:'Q9: trap synonym. (adhesive – glue)' },
+  { date:'21 May', skill:'listening', source:'Cam 17 · T1 · S2–3', score:'14/20', errors:'S3 Q32: They talked about sport center, but said they would be happy to have such a facility. The question was about a facility they ALREADY have.' },
+]));
+
+let speakingErrorRows = JSON.parse(localStorage.getItem('speakingErrorRows') || JSON.stringify([
+  { part:'part1', category:'fluency', text:'I kept pausing with long silences when asked about my hometown. I was thinking of words instead of keeping the talk going with filler phrases.', reappeared: false },
+  { part:'part2', category:'coherence', text:'My cue card answer jumped between points without linking them. I finished in under a minute because I ran out of things to say.', reappeared: true },
+]));
+
+let lessonPhotos = JSON.parse(localStorage.getItem('lessonPhotos') || '{}');
+let studyChecks = JSON.parse(localStorage.getItem('studyChecks') || '{}');
+let lessonNotes = JSON.parse(localStorage.getItem('lessonNotes') || '{}');
+
+function save() {
+  localStorage.setItem('completed', JSON.stringify(completedLessons));
+  localStorage.setItem('errorRows', JSON.stringify(errorRows));
+  localStorage.setItem('studyRows', JSON.stringify(studyRows));
+  localStorage.setItem('speakingErrorRows', JSON.stringify(speakingErrorRows));
+  localStorage.setItem('lessonPhotos', JSON.stringify(lessonPhotos));
+  localStorage.setItem('studyChecks', JSON.stringify(studyChecks));
+  localStorage.setItem('lessonNotes', JSON.stringify(lessonNotes));
+}
+
+// Render lessons
+function renderLessons() {
+  const grid = document.getElementById('lessons-grid');
+  grid.innerHTML = '';
+  lessons.forEach((l, i) => {
+    const done = completedLessons.includes(i);
+    const taskClass = l.task === 'Task 1' ? 'task1' : 'task2';
+    const wKey = `${l.num}_writing`;
+    const sKey = `${l.num}_speaking`;
+    const photoW = lessonPhotos[wKey];
+    const photoS = lessonPhotos[sKey];
+    const checks = studyChecks[l.num] || { vocab: false, ideas: false };
+    const notes = lessonNotes[l.num] || { vocab: '', ideas: '' };
+    const vocabDone = notes.vocab.trim().length > 0;
+    const ideasDone = notes.ideas.trim().length > 0;
+
+    const thumbHTML = (photo, key, label) => photo
+      ? `<div class="photo-slot">
+           <span class="slot-label">${label}</span>
+           <div class="feedback-thumb-wrap">
+             <img class="feedback-thumb" src="${photo}" alt="${label}" onclick="openLightbox('${key}')">
+             <button class="thumb-del" onclick="removePhoto('${key}')">✕</button>
+           </div>
+         </div>`
+      : `<div class="photo-slot">
+           <span class="slot-label">${label}</span>
+           <label class="photo-upload-btn" for="photo-${key}">📷 attach</label>
+           <input type="file" id="photo-${key}" accept="image/*" style="display:none" onchange="uploadPhoto(event,'${key}')">
+         </div>`;
+
+    const noteBlock = (type, label, emoji, placeholder) => {
+      const text = notes[type] || '';
+      const hasCnt = text.trim().length > 0;
+      const snippet = hasCnt ? text.trim().substring(0, 40) + (text.length > 40 ? '…' : '') : '';
+      const openClass = hasCnt ? ' open' : '';
+      const hasClass = hasCnt ? ' has-content' : '';
+      return `
+        <div class="note-block${hasClass}${openClass}" id="note-${l.num}-${type}">
+          <button class="note-toggle" onclick="toggleNote('${l.num}','${type}')">
+            <span>${emoji} ${label}</span>
+            <span class="note-toggle-right">
+              ${snippet ? `<span class="note-snippet">${snippet}</span>` : ''}
+              <span class="note-arrow">▼</span>
+            </span>
+          </button>
+          <div class="note-body">
+            <textarea class="note-textarea"
+              id="note-ta-${l.num}-${type}"
+              placeholder="${placeholder}"
+              oninput="saveNote('${l.num}','${type}',this.value)">${text}</textarea>
+            <div class="note-char-count" id="note-cc-${l.num}-${type}">${text.length} chars</div>
+          </div>
+        </div>`;
+    };
+
+    const card = document.createElement('div');
+    card.className = 'lesson-card' + (done ? ' done' : '');
+    card.innerHTML = `
+      <div class="lesson-num">L${l.num}</div>
+      <div class="lesson-body">
+        <div class="lesson-title">${l.topic}</div>
+        <div class="lesson-meta">
+          <span class="tag ${taskClass}">${l.task}</span>
+          <span class="tag type">${l.type}</span>
+          <span style="color:#b0a090;font-size:0.75rem">${l.detail}</span>
+        </div>
+        <div class="photo-slots">
+          ${thumbHTML(photoW, wKey, 'Writing feedback')}
+          ${thumbHTML(photoS, sKey, 'Speaking feedback')}
+        </div>
+        <div class="study-checks">
+          <span class="check-pill ${vocabDone ? 'done' : ''}">Vocabulary</span>
+          <span class="check-pill ${ideasDone ? 'done' : ''}">Ideas</span>
+        </div>
+        <div class="lesson-notes">
+          ${noteBlock('vocab', 'Vocabulary learned', '📗', 'List the exact words and phrases you studied for this lesson...')}
+          ${noteBlock('ideas', 'Ideas learned', '💡', 'Write the key arguments and positions you prepared for this topic...')}
+        </div>
+      </div>
+      <button class="check-btn" title="Mark complete">✓</button>
+    `;
+    card.querySelector('.check-btn').addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (done) completedLessons = completedLessons.filter(x => x !== i);
+      else completedLessons.push(i);
+      save(); renderLessons(); updateProgress();
+    });
+    grid.appendChild(card);
+  });
+  updateProgress();
+}
+
+function updateProgress() {
+  const n = completedLessons.length;
+  document.getElementById('progress-label').textContent = `${n} of 12 lessons completed`;
+  document.getElementById('progress-bar').style.width = (n/12*100) + '%';
+}
+
+// Category labels
+const catLabels = { answer:'Answering the Q', connection:'Connection', grammar:'Grammar', vocab:'Vocabulary', structure:'Structure', other:'Other' };
+const speakingCatLabels = { fluency:'Fluency', pronunciation:'Pronunciation', 'lexical-sp':'Lexical Resource', 'grammar-sp':'Grammar Range', coherence:'Coherence', 'content-sp':'Content / Ideas' };
+const partLabels = { part1:'Part 1', part2:'Part 2', part3:'Part 3' };
+
+function renderErrors() {
+  const tbody = document.getElementById('error-tbody');
+  tbody.innerHTML = '';
+  if (errorRows.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;padding:24px;color:#b0a090;font-style:italic;">No errors logged yet — great, or get started below ↓</td></tr>`;
+    return;
+  }
+  errorRows.forEach((r, i) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="lesson-cell">L${r.lesson}</td>
+      <td class="cat-cell"><span class="cat-badge ${r.category}">${catLabels[r.category] || r.category}</span></td>
+      <td>${r.text}</td>
+      <td class="reappeared-cell">
+        <span class="reappeared-badge ${r.reappeared ? 'yes' : 'no'}">${r.reappeared ? 'Repeated ⚠️' : '—'}</span>
+      </td>
+      <td><button class="del-btn" title="Delete" onclick="deleteError(${i})">✕</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function deleteError(i) {
+  if (confirm('Remove this error entry?')) { errorRows.splice(i,1); save(); renderErrors(); }
+}
+
+function renderSpeakingErrors() {
+  const tbody = document.getElementById('speaking-error-tbody');
+  tbody.innerHTML = '';
+  if (speakingErrorRows.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;padding:24px;color:#b0a090;font-style:italic;">No speaking mistakes logged yet — add your first below ↓</td></tr>`;
+    return;
+  }
+  speakingErrorRows.forEach((r, i) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="part-cell"><span class="part-badge ${r.part}">${partLabels[r.part] || r.part}</span></td>
+      <td class="cat-cell"><span class="cat-badge ${r.category}">${speakingCatLabels[r.category] || r.category}</span></td>
+      <td>${r.text}</td>
+      <td class="reappeared-cell">
+        <span class="reappeared-badge ${r.reappeared ? 'yes' : 'no'}">${r.reappeared ? 'Repeated ⚠️' : '—'}</span>
+      </td>
+      <td><button class="del-btn" title="Delete" onclick="deleteSpeakingError(${i})">✕</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function deleteSpeakingError(i) {
+  if (confirm('Remove this speaking error entry?')) { speakingErrorRows.splice(i,1); save(); renderSpeakingErrors(); }
+}
+
+function renderStudy() {
+  const tbody = document.getElementById('study-tbody');
+  tbody.innerHTML = '';
+  if (studyRows.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:24px;color:#b0a090;font-style:italic;">No sessions logged yet — add your first below ↓</td></tr>`;
+    return;
+  }
+  studyRows.forEach((r, i) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td style="white-space:nowrap;font-family:'DM Mono',monospace;font-size:0.8rem;color:#8b6f57">${r.date}</td>
+      <td><span class="skill-badge ${r.skill}">${r.skill.charAt(0).toUpperCase()+r.skill.slice(1)}</span></td>
+      <td style="font-size:0.82rem">${r.source}</td>
+      <td class="score-cell">${r.score}</td>
+      <td style="font-size:0.82rem">${r.errors}</td>
+      <td style="text-align:center;vertical-align:middle">
+        ${r.photo
+          ? `<img class="study-thumb" src="${r.photo}" alt="Test" onclick="showInLightbox(studyRows[${i}].photo)">`
+          : `<span style="color:var(--border);font-size:0.75rem">—</span>`}
+      </td>
+      <td><button class="del-btn" title="Delete" onclick="deleteStudy(${i})">✕</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function deleteStudy(i) {
+  if (confirm('Remove this session?')) { studyRows.splice(i,1); save(); renderStudy(); }
+}
+
+// Modal
+function openModal(type) {
+  modalType = type;
+  const mc = document.getElementById('modal-content');
+  if (type === 'error') {
+    mc.innerHTML = `
+      <h3>Add Error Entry</h3>
+      <div class="field-group">
+        <label>Lesson #</label>
+        <input type="text" id="m-lesson" placeholder="e.g. 04" maxlength="3">
+      </div>
+      <div class="field-group">
+        <label>Category</label>
+        <select id="m-cat">
+          <option value="answer">Answering the Q</option>
+          <option value="connection">Connection</option>
+          <option value="grammar">Grammar</option>
+          <option value="vocab">Vocabulary</option>
+          <option value="structure">Structure</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label>What I did wrong — in my own words</label>
+        <textarea id="m-text" rows="4" placeholder="Describe the mistake in your own words..."></textarea>
+      </div>
+      <div class="field-group">
+        <label>Reappeared?</label>
+        <select id="m-reappeared">
+          <option value="false">No</option>
+          <option value="true">Yes — repeated</option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-save" onclick="saveError()">Save entry</button>
+        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      </div>
+    `;
+  } else if (type === 'speakingError') {
+    mc.innerHTML = `
+      <h3>Add Speaking Mistake</h3>
+      <div class="field-group">
+        <label>Speaking Part</label>
+        <select id="m-part">
+          <option value="part1">Part 1 — Short personal questions</option>
+          <option value="part2">Part 2 — Cue card / long turn</option>
+          <option value="part3">Part 3 — Discussion / abstract</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label>Category</label>
+        <select id="m-sp-cat">
+          <option value="fluency">Fluency — hesitations, pauses, fillers</option>
+          <option value="pronunciation">Pronunciation — sounds, stress, intonation</option>
+          <option value="lexical-sp">Lexical Resource — word choice, range</option>
+          <option value="grammar-sp">Grammar Range — accuracy, complexity</option>
+          <option value="coherence">Coherence — linking, organisation</option>
+          <option value="content-sp">Content / Ideas — running out of things to say</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label>What I did wrong — in my own words</label>
+        <textarea id="m-sp-text" rows="4" placeholder="Describe the mistake in your own words..."></textarea>
+      </div>
+      <div class="field-group">
+        <label>Reappeared?</label>
+        <select id="m-sp-reappeared">
+          <option value="false">No</option>
+          <option value="true">Yes — repeated</option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-save" onclick="saveSpeakingError()">Save entry</button>
+        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      </div>
+    `;
+  } else {
+    mc.innerHTML = `
+      <h3>Add Study Session</h3>
+      <div class="field-group">
+        <label>Date</label>
+        <input type="text" id="m-date" placeholder="e.g. 23 May">
+      </div>
+      <div class="field-group">
+        <label>Skill</label>
+        <select id="m-skill">
+          <option value="reading">Reading</option>
+          <option value="listening">Listening</option>
+          <option value="writing">Writing</option>
+          <option value="speaking">Speaking</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label>Source</label>
+        <input type="text" id="m-source" placeholder="e.g. Cam 18 · T2 · P1">
+      </div>
+      <div class="field-group">
+        <label>Score</label>
+        <input type="text" id="m-score" placeholder="e.g. 11/13">
+      </div>
+      <div class="field-group">
+        <label>Errors — reason</label>
+        <textarea id="m-errors" rows="3" placeholder="What went wrong and why..."></textarea>
+      </div>
+      <div class="field-group">
+        <label>Attach test <span style="color:var(--rust);font-weight:600">— required</span></label>
+        <label class="photo-upload-btn" for="m-study-photo" style="display:inline-flex">📷 choose photo</label>
+        <input type="file" id="m-study-photo" accept="image/*" style="display:none" onchange="previewStudyPhoto(event)">
+        <div class="study-photo-preview" id="study-photo-preview">
+          <img id="study-preview-img" src="" alt="Preview">
+          <span>✓ photo ready</span>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-save" onclick="saveStudy()">Save session</button>
+        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      </div>
+    `;
+  }
+  document.getElementById('modal-backdrop').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modal-backdrop').classList.remove('open');
+  modalType = null;
+  currentStudyPhoto = null;
+}
+
+function saveError() {
+  const lesson = document.getElementById('m-lesson').value.trim();
+  const text = document.getElementById('m-text').value.trim();
+  if (!lesson || !text) { alert('Please fill in lesson # and description.'); return; }
+  errorRows.push({
+    lesson, category: document.getElementById('m-cat').value,
+    text, reappeared: document.getElementById('m-reappeared').value === 'true'
+  });
+  save(); renderErrors(); closeModal();
+}
+
+function saveStudy() {
+  const date = document.getElementById('m-date').value.trim();
+  const source = document.getElementById('m-source').value.trim();
+  if (!date || !source) { alert('Please fill in date and source.'); return; }
+  if (!currentStudyPhoto) { alert('You must attach a photo of your test. No photo — no log entry.'); return; }
+  studyRows.push({
+    date, skill: document.getElementById('m-skill').value,
+    source, score: document.getElementById('m-score').value.trim() || '—',
+    errors: document.getElementById('m-errors').value.trim() || '—',
+    photo: currentStudyPhoto || null
+  });
+  save(); renderStudy(); closeModal();
+}
+
+function saveSpeakingError() {
+  const text = document.getElementById('m-sp-text').value.trim();
+  if (!text) { alert('Please fill in the mistake description.'); return; }
+  speakingErrorRows.push({
+    part: document.getElementById('m-part').value,
+    category: document.getElementById('m-sp-cat').value,
+    text,
+    reappeared: document.getElementById('m-sp-reappeared').value === 'true'
+  });
+  save(); renderSpeakingErrors(); closeModal();
+}
+
+document.getElementById('modal-backdrop').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// Photo functions
+let currentStudyPhoto = null;
+
+function previewStudyPhoto(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  if (file.size > 5 * 1024 * 1024) { alert('Photo too large. Please use an image under 5MB.'); return; }
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    currentStudyPhoto = e.target.result;
+    const preview = document.getElementById('study-photo-preview');
+    const img = document.getElementById('study-preview-img');
+    img.src = e.target.result;
+    preview.classList.add('visible');
+  };
+  reader.readAsDataURL(file);
+}
+
+function uploadPhoto(event, key) {
+  const file = event.target.files[0];
+  if (!file) return;
+  if (file.size > 5 * 1024 * 1024) { alert('Photo too large. Please use an image under 5MB.'); return; }
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    lessonPhotos[key] = e.target.result;
+    save(); renderLessons();
+  };
+  reader.readAsDataURL(file);
+}
+
+function removePhoto(key) {
+  if (confirm('Remove this feedback photo?')) {
+    delete lessonPhotos[key];
+    save(); renderLessons();
+  }
+}
+
+function showInLightbox(src) {
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox').classList.add('open');
+}
+
+function openLightbox(key) {
+  showInLightbox(lessonPhotos[key]);
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+}
+
+// Study checklist
+function toggleNote(lessonNum, type) {
+  const block = document.getElementById(`note-${lessonNum}-${type}`);
+  if (block) block.classList.toggle('open');
+}
+
+let _noteTimer = {};
+function saveNote(lessonNum, type, val) {
+  if (!lessonNotes[lessonNum]) lessonNotes[lessonNum] = { vocab: '', ideas: '' };
+  lessonNotes[lessonNum][type] = val;
+  // Update char count inline without full re-render
+  const cc = document.getElementById(`note-cc-${lessonNum}-${type}`);
+  if (cc) cc.textContent = `${val.length} chars`;
+  // Update pill and block styling inline
+  const block = document.getElementById(`note-${lessonNum}-${type}`);
+  if (block) {
+    if (val.trim().length > 0) block.classList.add('has-content');
+    else block.classList.remove('has-content');
+  }
+  // Debounced save
+  clearTimeout(_noteTimer[lessonNum + type]);
+  _noteTimer[lessonNum + type] = setTimeout(() => save(), 600);
+}
+
+// Init
+renderLessons();
+renderErrors();
+renderStudy();
+renderSpeakingErrors();
+</script>
+</body>
+</html>
