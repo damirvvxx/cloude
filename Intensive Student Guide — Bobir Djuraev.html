@@ -984,19 +984,10 @@ const lessons = [
 
 // State
 let completedLessons = JSON.parse(localStorage.getItem('completed') || '[]');
-let errorRows = JSON.parse(localStorage.getItem('errorRows') || JSON.stringify([
-  { lesson:'02', category:'answer', text:'The question said "to what extent do you agree" but I treated it as a simple agree/disagree. I never qualified my position — I just said "I agree" and listed reasons.', reappeared: false },
-  { lesson:'03', category:'connection', text:'My topic sentence was not connected to my thesis, and I also did not develop the topic sentence in the body paragraph.', reappeared: true },
-]));
-let studyRows = JSON.parse(localStorage.getItem('studyRows') || JSON.stringify([
-  { date:'19 May', skill:'reading', source:'Cam 18 · T2 · P1', score:'11/13', errors:'Q9: trap synonym. (adhesive – glue)', photo: null },
-  { date:'21 May', skill:'listening', source:'Cam 17 · T1 · S2–3', score:'14/20', errors:'S3 Q32: They talked about sport center, but said they would be happy to have such a facility. The question was about a facility they ALREADY have.', photo: null },
-]));
+let errorRows = JSON.parse(localStorage.getItem('errorRows') || JSON.stringify([]));
+let studyRows = JSON.parse(localStorage.getItem('studyRows') || JSON.stringify([]));
 
-let speakingErrorRows = JSON.parse(localStorage.getItem('speakingErrorRows') || JSON.stringify([
-  { part:'part1', category:'fluency', text:'I kept pausing with long silences when asked about my hometown. I was thinking of words instead of keeping the talk going with filler phrases.', reappeared: false },
-  { part:'part2', category:'coherence', text:'My cue card answer jumped between points without linking them. I finished in under a minute because I ran out of things to say.', reappeared: true },
-]));
+let speakingErrorRows = JSON.parse(localStorage.getItem('speakingErrorRows') || JSON.stringify([]));
 
 let lessonPhotos = JSON.parse(localStorage.getItem('lessonPhotos') || '{}');
 let studyChecks = JSON.parse(localStorage.getItem('studyChecks') || '{}');
